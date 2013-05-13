@@ -61,6 +61,12 @@
       assertNoException(function () {
         this.xhr.onreadystatechange();
       }.bind(this));
+    },
+
+    "test should pass argument to send": function () {
+      ajax.get("/url");
+
+      assertNotUndefined(this.xhr.send.args[0]);
     }
   });
 
