@@ -12,6 +12,7 @@
     var transport = ajax.create();
     transport.open("GET", url, true);
     transport.onreadystatechange = function () {};
+    transport.send();
   }
 
   ajax.get = get;
