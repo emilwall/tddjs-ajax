@@ -70,16 +70,6 @@
       arguments = this.xhr.send.args;
 
       assertNotUndefined(arguments[0]);
-    },
-
-    "test should reset onreadystatechange when complete in order to avoid memory leak in Internet Explorer":
-    function () {
-      this.xhr.readyState = 4;
-      ajax.get("/url");
-
-      this.xhr.onreadystatechange();
-
-      assertSame(tddjs.noop, this.xhr.onreadystatechange);
     }
   });
 
@@ -104,6 +94,16 @@
       this.xhr.onreadystatechange();
 
       assert(success.called);
+    },
+
+    "test should reset onreadystatechange when complete in order to avoid memory leak in Internet Explorer":
+    function () {
+      this.xhr.readyState = 4;
+      ajax.get("/url");
+
+      this.xhr.onreadystatechange();
+
+      assertSame(tddjs.noop, this.xhr.onreadystatechange);
     }
   });
 }());
