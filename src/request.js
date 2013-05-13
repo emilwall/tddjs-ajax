@@ -5,7 +5,7 @@
     if (typeof url != "string") {
       throw new TypeError("URL should be string");
     }
-	ajax.create();
+	var transport = ajax.create();
   }
 
   ajax.get = get;
