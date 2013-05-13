@@ -1,17 +1,21 @@
-TestCase("GetRequestTest", {
-  "test should define get method": function () {
-    assertFunction(tddjs.ajax.get);
-  },
+(function () {
+  var ajax = tddjs.ajax;
 
-  "test should throw error without url": function () {
-    assertException(function () {
-      tddjs.ajax.get();
-    }, "TypeError");
-  },
+  TestCase("GetRequestTest", {
+    "test should define get method": function () {
+      assertFunction(ajax.get);
+    },
 
-  "test should not throw error when given url": function () {
-    assertNoException(function () {
-      tddjs.ajax.get("www.tddjs.com");
-    });
-  }
-});
+    "test should throw error without url": function () {
+      assertException(function () {
+        ajax.get();
+      }, "TypeError");
+    },
+
+    "test should not throw error when given url": function () {
+      assertNoException(function () {
+        ajax.get("www.tddjs.com");
+      });
+    }
+  });
+}());
