@@ -6,9 +6,12 @@
   }
 
   function requestComplete(transport, options) {
-    if (transport.status == 200) {
-      if (typeof options.success == "function") {
-        options.success(transport);
+    var status = transport.status,
+        success = options.success;
+
+    if (status == 200 || (tddjs.isLocal() && !status)) {
+      if (typeof success == "function") {
+        success(transport);
       }
     }
   }

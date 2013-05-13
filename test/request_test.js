@@ -78,10 +78,14 @@
       this.ajaxCreate = ajax.create;
       this.xhr = Object.create(fakeXMLHttpRequest);
       ajax.create = stubFn(this.xhr);
+
+      this.isLocal = tddjs.isLocal;
+      tddjs.isLocal = stubFn(true);
     },
 
     tearDown: function () {
       ajax.create = this.ajaxCreate;
+      tddjs.isLocal = this.isLocal;
     },
 
     "test should call success handler for status 200":
@@ -104,6 +108,18 @@
       this.xhr.onreadystatechange();
 
       assertSame(tddjs.noop, this.xhr.onreadystatechange);
+    },
+
+    "test should call success handler for local requests":
+    function () {
+      var success = stubFn();
+      this.xhr.readyState = 4;
+      this.xhr.status = 0;
+
+      ajax.get("file.html", { success: success });
+      this.xhr.onreadystatechange();
+
+      assert(success.called);
     }
   });
 }());
