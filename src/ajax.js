@@ -17,8 +17,14 @@ tddjs.namespace("ajax");
   for (var i = 0, l = options.length; i < l; i++) {
     try {
       xhr = options[i]();
-      ajax.create = options[i];
-      break;
+
+      if (typeof xhr.readyState == "number" &&
+          tddjs.isHostMethod(xhr, "open") &&
+          tddjs.isHostMethod(xhr, "send") &&
+          tddjs.isHostMethod(xhr, "setRequestHeader")) {
+        ajax.create = options[i];
+        break;
+      }
     } catch (e) {}
   }
 }());
