@@ -25,6 +25,7 @@
     transport.onreadystatechange = function () {
       if (transport.readyState == 4) {
         requestComplete(transport, options);
+        transport.onreadystatechange = tddjs.noop;
       }
     };
 
