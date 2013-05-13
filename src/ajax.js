@@ -1,5 +1,3 @@
-tddjs.namespace("ajax");
-
 (function () {
   var xhr;
   var ajax = tddjs.namespace("ajax");
