@@ -63,10 +63,13 @@
       }.bind(this));
     },
 
-    "test should pass argument to send": function () {
-      ajax.get("/url");
+    "test should pass argument to send in order to work with firefox 3.0.x and older": function () {
+      var arguments;
 
-      assertNotUndefined(this.xhr.send.args[0]);
+      ajax.get("/url");
+      arguments = this.xhr.send.args;
+
+      assertNotUndefined(arguments[0]);
     }
   });
 

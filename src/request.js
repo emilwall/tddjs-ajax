@@ -28,7 +28,7 @@
       }
     };
 
-    transport.send(null); // Required to work in Firefox 3.0.x and older
+    transport.send(null);
   }
 
   ajax.get = get;
