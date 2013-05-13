@@ -35,18 +35,12 @@
 
     "test should call open with method, url, async flag":
       function () {
-        var actual,
+        var openStub = stubFn(),
             url = "/url";
-
-        ajax.create = stubFn({
-          open: function () {
-            actual = arguments;
-          }
-        });
-
+        ajax.create = stubFn({ open: openStub });
         ajax.get(url);
 
-        assertEquals(["GET", url, true], actual);
+        assertEquals(["GET", url, true], openStub.args);
       }
   });
 }());
