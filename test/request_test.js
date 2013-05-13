@@ -27,10 +27,7 @@
     },
 
     "test should obtain an XMLHttpRequest object": function () {
-      ajax.create = function () {
-        ajax.create.called = true;
-      };
-
+      ajax.create = stubFn();
       ajax.get("/url");
 
       assert(ajax.create.called);
