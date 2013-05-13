@@ -16,6 +16,20 @@
       assertNoException(function () {
         ajax.get("www.tddjs.com");
       });
+    },
+
+    "test should obtain an XMLHttpRequest object": function () {
+      var originalCreate = ajax.create;
+
+      ajax.create = function () {
+        ajax.create.called = true;
+      };
+
+      ajax.get("/url");
+
+      assert(ajax.create.called);
+
+      ajax.create = originalCreate;
     }
   });
 }());
