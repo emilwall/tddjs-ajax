@@ -7,7 +7,9 @@
 
   function requestComplete(transport, options) {
     if (transport.status == 200) {
-      options.success(transport);
+      if (typeof options.success == "function") {
+        options.success(transport);
+      }
     }
   }
 
@@ -16,6 +18,7 @@
       throw new TypeError("URL should be string");
     }
 
+    options = options || {};
     var transport = ajax.create();
     transport.open("GET", url, true);
 
