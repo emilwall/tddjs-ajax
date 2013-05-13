@@ -1,3 +1,5 @@
 tddjs.namespace("ajax").get = function (url) {
-  throw new TypeError();
+  if (typeof url != "string") {
+    throw new TypeError("URL should be string");
+  }
 };

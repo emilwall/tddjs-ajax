@@ -7,5 +7,11 @@ TestCase("GetRequestTest", {
     assertException(function () {
       tddjs.ajax.get();
     }, "TypeError");
+  },
+
+  "test should not throw error when given url": function () {
+    assertNoException(function () {
+      tddjs.ajax.get("www.tddjs.com");
+    });
   }
 });
