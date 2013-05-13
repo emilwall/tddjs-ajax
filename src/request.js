@@ -9,8 +9,8 @@
     if (typeof url != "string") {
       throw new TypeError("URL should be string");
     }
-	var transport = ajax.create();
-	transport.open("GET", url, true);
+    var transport = ajax.create();
+    transport.open("GET", url, true);
   }
 
   ajax.get = get;
