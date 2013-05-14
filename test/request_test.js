@@ -148,6 +148,24 @@
     }
   });
 
+  TestCase("DelegateRequestTest", {
+    setUp: function () {
+      this.ajaxRequest = ajax.request;
+    },
+
+    tearDown: function () {
+      ajax.request = this.ajaxRequest;
+    },
+
+    "test should pass specified request method": function () {
+      ajax.request = stubFn();
+
+      ajax.delegateRequest("/url", {}, "GET");
+
+      assertEquals("GET", ajax.request.args[1].method);
+    }
+  });
+
   TestCase("PostRequestTest", {
     setUp: function () {
       this.ajaxRequest = ajax.request;

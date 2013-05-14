@@ -37,18 +37,22 @@
 
   ajax.request = request;
 
-  function get(url, options) {
+  function delegateRequest(url, options, method) {
     options = tddjs.extend({}, options);
-    options.method = "GET";
+    options.method = method;
     ajax.request(url, options);
+  }
+
+  ajax.delegateRequest = delegateRequest;
+
+  function get(url, options) {
+    delegateRequest(url, options, "GET");
   }
 
   ajax.get = get;
 
   function post(url, options) {
-    options = tddjs.extend({}, options);
-    options.method = "POST";
-    ajax.request(url, options);
+    delegateRequest(url, options, "POST");
   }
 
   ajax.post = post;
