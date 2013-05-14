@@ -1,6 +1,24 @@
 (function () {
   var ajax = tddjs.ajax;
 
+  function forceStatusAndReadyState(xhr, url, status, rs) {
+    var success = stubFn();
+    var failure = stubFn();
+
+    ajax.get(url, {
+      success: success,
+      failure: failure
+    });
+
+    xhr.status = status;
+    xhr.readyStateChange(rs);
+
+    return {
+      success: success.called,
+      failure: failure.called
+    };
+  }
+
   TestCase("GetRequestTest", {
     setUp: function () {
       this.ajaxCreate = ajax.create;
@@ -80,7 +98,6 @@
       ajax.create = stubFn(this.xhr);
 
       this.isLocal = tddjs.isLocal;
-      tddjs.isLocal = stubFn(true);
     },
 
     tearDown: function () {
@@ -90,14 +107,9 @@
 
     "test should call success handler for status 200":
     function () {
-      this.xhr.readyState = 4;
-      this.xhr.status = 200;
-      var success = stubFn();
+      var request = forceStatusAndReadyState(this.xhr, "/url", 200, 4);
 
-      ajax.get("/url", { success: success });
-      this.xhr.onreadystatechange();
-
-      assert(success.called);
+      assert(request.success);
     },
 
     "test should reset onreadystatechange when complete in order to avoid memory leak in Internet Explorer":
@@ -112,14 +124,12 @@
 
     "test should call success handler for local requests":
     function () {
-      var success = stubFn();
-      this.xhr.readyState = 4;
-      this.xhr.status = 0;
+      var request;
 
-      ajax.get("file.html", { success: success });
-      this.xhr.onreadystatechange();
+      tddjs.isLocal = stubFn(true);
+      request = forceStatusAndReadyState(this.xhr, "file.html", 0, 4);
 
-      assert(success.called);
+      assert(request.success);
     }
   });
 }());
