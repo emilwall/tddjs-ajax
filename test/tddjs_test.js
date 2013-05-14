@@ -28,6 +28,12 @@
       assertTrue(tddjs.isLocal({
         protocol: "file:"
       }));
+    },
+
+    "test should return false when location.protocol is undefined": function () {
+      assertFalse(tddjs.isLocal({
+        protocol: undefined
+      }));
     }
   });
 })();
