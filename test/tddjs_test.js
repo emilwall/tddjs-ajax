@@ -30,10 +30,12 @@
       }));
     },
 
-    "test should return false when location.protocol is undefined": function () {
-      assertFalse(tddjs.isLocal({
-        protocol: undefined
-      }));
+    "test should throw error when location.protocol is undefined": function () {
+      assertException(function () {
+        tddjs.isLocal({
+          protocol: undefined
+        });
+      }, "TypeError");
     }
   });
 })();
