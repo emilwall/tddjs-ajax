@@ -43,8 +43,6 @@
     ajax.request(url, options);
   }
 
-  ajax.delegateRequest = delegateRequest;
-
   function get(url, options) {
     delegateRequest(url, options, "GET");
   }
