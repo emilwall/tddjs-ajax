@@ -38,4 +38,21 @@
       }, "TypeError");
     }
   });
+
+  TestCase("MyEncodeUriTest", {
+    "test should define myEncodeURI method in encoding namespace": function () {
+      assertFunction(tddjs.encoding.myEncodeURI);
+    },
+
+    "test should return URI encoded version of strings": function () {
+      assertEquals("hej%20hopp", tddjs.encoding.myEncodeURI("hej hopp"));
+    },
+
+    "test should put object attributes as url parameters": function () {
+      assertEquals("hej=hopp&hi=hello", tddjs.encoding.myEncodeURI({
+        hej: "hopp",
+        hi: "hello"
+      }));
+    }
+  });
 })();
