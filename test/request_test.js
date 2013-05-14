@@ -94,6 +94,13 @@
       arguments = this.xhr.send.args;
 
       assertNotUndefined(arguments[0]);
+    },
+
+    "test should not make changes to options passed as parameter": function () {
+      var options = {};
+      ajax.get("/uri", options);
+
+      assertEquals({}, options);
     }
   });
 
