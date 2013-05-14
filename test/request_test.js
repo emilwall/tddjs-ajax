@@ -129,4 +129,15 @@
       assert(request.success);
     }
   });
+
+  TestCase("RequestTest", {
+    setUp: setUp,
+    tearDown: tearDown,
+
+    "test should use specified request method": function () {
+      ajax.request("/uri", { method: "POST" });
+
+      assertEquals("POST", this.xhr.open.args[0]);
+    }
+  });
 }());
