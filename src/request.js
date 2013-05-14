@@ -44,4 +44,12 @@
   }
 
   ajax.get = get;
+
+  function post(url, options) {
+    options = tddjs.extend({}, options);
+    options.method = "POST";
+    ajax.request(url, options);
+  }
+
+  ajax.post = post;
 }());
