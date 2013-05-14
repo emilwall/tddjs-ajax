@@ -19,16 +19,22 @@
     };
   }
 
-  TestCase("GetRequestTest", {
-    setUp: function () {
-      this.ajaxCreate = ajax.create;
-      this.xhr = Object.create(fakeXMLHttpRequest);
-      ajax.create = stubFn(this.xhr);
-    },
+  function setUp() {
+    this.tddjsIsLocal = tddjs.isLocal;
+    this.ajaxCreate = ajax.create;
+    this.xhr = Object.create(fakeXMLHttpRequest);
+    ajax.create = stubFn(this.xhr);
+  }
 
-    tearDown: function () {
-      ajax.create = this.ajaxCreate;
-    },
+  function tearDown() {
+    tddjs.isLocal = this.tddjsIsLocal;
+    ajax.create = this.ajaxCreate;
+  }
+
+  TestCase("GetRequestTest", {
+    setUp: setUp,
+
+    tearDown: tearDown,
 
     "test should define get method": function () {
       assertFunction(ajax.get);
@@ -92,18 +98,9 @@
   });
 
   TestCase("ReadyStateHandlerTest", {
-    setUp: function () {
-      this.ajaxCreate = ajax.create;
-      this.xhr = Object.create(fakeXMLHttpRequest);
-      ajax.create = stubFn(this.xhr);
+    setUp: setUp,
 
-      this.isLocal = tddjs.isLocal;
-    },
-
-    tearDown: function () {
-      ajax.create = this.ajaxCreate;
-      tddjs.isLocal = this.isLocal;
-    },
+    tearDown: tearDown,
 
     "test should call success handler for status 200":
     function () {
