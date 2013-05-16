@@ -140,8 +140,15 @@
   });
 
   TestCase("RequestTest", {
-    setUp: setUp,
-    tearDown: tearDown,
+    setUp: function () {
+      setUp.call(this);
+      this.urlParams = { field1: "13", field2: "Lots of data!" };
+      this.encodedUrlParams = tddjs.encoding.myEncodeURI(this.urlParams);
+    },
+
+    tearDown: function () {
+      tearDown.call(this);
+    },
 
     "test should use specified request method": function () {
       ajax.request("/uri", { method: "POST" });
@@ -151,47 +158,40 @@
 
     "test should encode data": function () {
       tddjs.encoding.myEncodeURI = stubFn();
-      var urlParams = { field1: "13", field2: "Lots of data!" };
 
-      ajax.request("/url", { data: urlParams, method: "POST" });
+      ajax.request("/url", { data: this.urlParams, method: "POST" });
 
-      assertSame(urlParams, tddjs.encoding.myEncodeURI.args[0]);
+      assertSame(this.urlParams, tddjs.encoding.myEncodeURI.args[0]);
     },
 
     "test should encode data": function () {
       tddjs.encoding.myEncodeURI = undefined;
-      var urlParams = { field1: "13", field2: "Lots of data!" };
 
       assertNoException(function () {
-        ajax.request("/url", { data: urlParams, method: "POST" });
+        ajax.request("/url", { data: this.urlParams, method: "POST" });
       });
     },
 
     "test should send data with send() for POST": function () {
-      var urlParams = { field1: "13", field2: "Lots of data!" };
-      var expected = tddjs.encoding.myEncodeURI(urlParams);
+      ajax.request("/url", { data: this.urlParams, method: "POST" });
 
-      ajax.request("/url", { data: urlParams, method: "POST" });
-
-      assertSame(expected, this.xhr.send.args[0]);
+      assertSame(this.encodedUrlParams, this.xhr.send.args[0]);
     },
 
     "test should send data on URL for GET": function () {
       var url = "/url";
-      var urlParams = { field1: "$13", field2: "Lots of data!" };
-      var expected = url + "?" + tddjs.encoding.myEncodeURI(urlParams);
+      var expected = url + "?" + this.encodedUrlParams
 
-      ajax.request(url, { data: urlParams, method: "GET" });
+      ajax.request(url, { data: this.urlParams, method: "GET" });
 
       assertEquals(expected, this.xhr.open.args[1]);
     },
 
     "test should handle existing data on URL for GET": function () {
       var url = "/url?data=foo&bar=baz";
-      var urlParams = { field1: "$13", field2: "Lots of data!" };
-      var expected = url + "&" + tddjs.encoding.myEncodeURI(urlParams);
+      var expected = url + "&" + this.encodedUrlParams;
 
-      ajax.request(url, { data: urlParams, method: "GET" });
+      ajax.request(url, { data: this.urlParams, method: "GET" });
 
       assertEquals(expected, this.xhr.open.args[1]);
     }
