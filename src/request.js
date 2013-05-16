@@ -17,9 +17,14 @@
   }
 
   function setData(options) {
-    if (typeof tddjs.encoding.myEncodeURI === "function" &&
-        options.method === "POST") {
-      options.data = tddjs.encoding.myEncodeURI(options.data);
+    if (options.data) {
+      if (typeof tddjs.encoding.myEncodeURI === "function") {
+        options.data = tddjs.encoding.myEncodeURI(options.data);
+      }
+      if (options.method == "GET") {
+        options.url += "?" + options.data;
+        options.data = null;
+      }
     } else {
       options.data = null;
     }
@@ -31,10 +36,11 @@
     }
 
     options = tddjs.extend({}, options);
+    options.url = url;
     setData(options);
 
     var transport = ajax.create();
-    transport.open(options.method || "GET", url, true);
+    transport.open(options.method || "GET", options.url, true);
 
     transport.onreadystatechange = function () {
       if (transport.readyState === 4) {

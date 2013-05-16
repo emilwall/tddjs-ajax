@@ -174,6 +174,16 @@
       ajax.request("/url", { data: urlParams, method: "POST" });
 
       assertSame(expected, this.xhr.send.args[0]);
+    },
+
+    "test should send data on URL for GET": function () {
+      var url = "/url";
+      var urlParams = { field1: "$13", field2: "Lots of data!" };
+      var expected = url + "?" + tddjs.encoding.myEncodeURI(urlParams);
+
+      ajax.request(url, { data: urlParams, method: "GET" });
+
+      assertEquals(expected, this.xhr.open.args[1]);
     }
   });
 
