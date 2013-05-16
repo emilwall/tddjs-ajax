@@ -51,6 +51,10 @@
       }
     };
 
+    if (options.header) {
+      transport.setRequestHeader("Accept", options.header.Accept);
+    }
+
     transport.send(options.data);
   }
 

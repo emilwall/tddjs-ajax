@@ -142,12 +142,14 @@
   TestCase("RequestTest", {
     setUp: function () {
       setUp.call(this);
+      this.xhrSetRequestHeader = this.xhr.setRequestHeader;
       this.urlParams = { field1: "13", field2: "Lots of data!" };
       this.encodedUrlParams = tddjs.encoding.myEncodeURI(this.urlParams);
     },
 
     tearDown: function () {
       tearDown.call(this);
+      this.xhr.setRequestHeader = this.xhrSetRequestHeader;
     },
 
     "test should use specified request method": function () {
@@ -194,6 +196,17 @@
       ajax.request(url, { data: this.urlParams, method: "GET" });
 
       assertEquals(expected, this.xhr.open.args[1]);
+    },
+
+    "test should call setRequestHeader": function () {
+      var header = {
+        Accept: "text/plain"
+      };
+      this.xhr.setRequestHeader = stubFn();
+
+      ajax.request("/url", { header: header, method: "GET" });
+
+      assertTrue(this.xhr.setRequestHeader.called);
     }
   });
 
