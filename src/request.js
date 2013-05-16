@@ -16,20 +16,22 @@
     }
   }
 
+  function setData(options) {
+    if (typeof tddjs.encoding.myEncodeURI === "function" &&
+        options.method === "POST") {
+      options.data = tddjs.encoding.myEncodeURI(options.data);
+    } else {
+      options.data = null;
+    }
+  }
+
   function request(url, options) {
     if (typeof url != "string") {
       throw new TypeError("URL should be string");
     }
 
     options = tddjs.extend({}, options);
-    if (typeof tddjs.encoding.myEncodeURI === "function") {
-      options.data = tddjs.encoding.myEncodeURI(options.data);
-    }
-    var data = null;
-
-    if (options.method === "POST") {
-      data = options.data;
-    }
+    setData(options);
 
     var transport = ajax.create();
     transport.open(options.method || "GET", url, true);
@@ -41,7 +43,7 @@
       }
     };
 
-    transport.send(data);
+    transport.send(options.data);
   }
 
   ajax.request = request;
