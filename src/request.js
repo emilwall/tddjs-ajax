@@ -22,8 +22,9 @@
     }
 
     options = tddjs.extend({}, options);
-    options.data = tddjs.encoding.myEncodeURI(options.data);
-    options = options || {};
+    if (typeof tddjs.encoding.myEncodeURI === "function") {
+      options.data = tddjs.encoding.myEncodeURI(options.data);
+    }
     var transport = ajax.create();
     transport.open(options.method || "GET", url, true);
 

@@ -156,6 +156,15 @@
       ajax.request("/url", { data: urlParams, method: "POST" });
 
       assertSame(urlParams, tddjs.encoding.myEncodeURI.args[0]);
+    },
+
+    "test should encode data": function () {
+      tddjs.encoding.myEncodeURI = undefined;
+      var urlParams = { field1: "13", field2: "Lots of data!" };
+
+      assertNoException(function () {
+        ajax.request("/url", { data: urlParams, method: "POST" });
+      });
     }
   });
 
