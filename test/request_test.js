@@ -184,6 +184,16 @@
       ajax.request(url, { data: urlParams, method: "GET" });
 
       assertEquals(expected, this.xhr.open.args[1]);
+    },
+
+    "test should handle existing data on URL for GET": function () {
+      var url = "/url?data=foo&bar=baz";
+      var urlParams = { field1: "$13", field2: "Lots of data!" };
+      var expected = url + "&" + tddjs.encoding.myEncodeURI(urlParams);
+
+      ajax.request(url, { data: urlParams, method: "GET" });
+
+      assertEquals(expected, this.xhr.open.args[1]);
     }
   });
 

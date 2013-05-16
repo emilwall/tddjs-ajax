@@ -23,7 +23,8 @@
         options.data = tddjs.encoding.myEncodeURI(options.data);
       }
       if (options.method == "GET") {
-        options.url += "?" + options.data;
+        var delimiter = options.url.indexOf("?") === -1 ? "?" : "&";
+        options.url += delimiter + options.data;
         options.data = null;
       }
     } else {
