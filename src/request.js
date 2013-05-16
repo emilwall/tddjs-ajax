@@ -44,9 +44,9 @@
     var transport = ajax.create();
     transport.open(options.method || "GET", options.url, true);
 
-    if (options.header) {
-      for (var key in options.header) {
-        transport.setRequestHeader(key, options.header[key]);
+    if (options.headers) {
+      for (var header in options.headers) {
+        transport.setRequestHeader(header, options.headers[header]);
       }
     }
 
