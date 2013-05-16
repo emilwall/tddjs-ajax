@@ -44,18 +44,18 @@
     var transport = ajax.create();
     transport.open(options.method || "GET", options.url, true);
 
+    if (options.header) {
+      for (var key in options.header) {
+        transport.setRequestHeader(key, options.header[key]);
+      }
+    }
+
     transport.onreadystatechange = function () {
       if (transport.readyState === 4) {
         requestComplete(transport, options);
         transport.onreadystatechange = tddjs.noop;
       }
     };
-
-    if (options.header) {
-      for (var key in options.header) {
-        transport.setRequestHeader(key, options.header[key]);
-      }
-    }
 
     transport.send(options.data);
   }
