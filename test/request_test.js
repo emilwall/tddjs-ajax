@@ -199,12 +199,9 @@
     },
 
     "test should call setRequestHeader": function () {
-      var header = {
-        Accept: "text/plain"
-      };
       this.xhr.setRequestHeader = stubFn();
 
-      ajax.request("/url", { header: header, method: "GET" });
+      ajax.request("/url", { header: { Accept: "text/plain" }, method: "GET" });
 
       assertTrue(this.xhr.setRequestHeader.called);
     },
