@@ -18,7 +18,8 @@
 
   function setData(options) {
     if (options.data) {
-      if (typeof tddjs.encoding.myEncodeURI === "function") {
+      if (tddjs.encoding &&
+          typeof tddjs.encoding.myEncodeURI === "function") {
         options.data = tddjs.encoding.myEncodeURI(options.data);
       }
       if (options.method == "GET") {
