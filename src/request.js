@@ -52,7 +52,9 @@
     };
 
     if (options.header) {
-      transport.setRequestHeader("Accept", options.header.Accept);
+      for (var key in options.header) {
+        transport.setRequestHeader(key, options.header[key]);
+      }
     }
 
     transport.send(options.data);

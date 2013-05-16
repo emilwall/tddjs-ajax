@@ -207,6 +207,27 @@
       ajax.request("/url", { header: header, method: "GET" });
 
       assertTrue(this.xhr.setRequestHeader.called);
+    },
+
+    "test should call setRequestHeader with all header values": function () {
+      var header = {
+        "Accept": "text/plain",
+        "Content-Type": "text/plain",
+        "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3"
+      };
+          args = [];
+      this.xhr.setRequestHeader = function () {
+        args.push(arguments);
+      };
+
+      ajax.request("/url", { header: header, method: "GET" });
+
+      assertEquals("Accept", args[0][0]);
+      assertEquals("text/plain", args[0][1]);
+      assertEquals("Content-Type", args[1][0]);
+      assertEquals("text/plain", args[1][1]);
+      assertEquals("Accept-Charset", args[2][0]);
+      assertEquals("ISO-8859-1,utf-8;q=0.7,*;q=0.3", args[2][1]);
     }
   });
 
