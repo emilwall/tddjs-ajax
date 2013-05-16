@@ -24,11 +24,13 @@
     this.ajaxCreate = ajax.create;
     this.xhr = Object.create(fakeXMLHttpRequest);
     ajax.create = stubFn(this.xhr);
+    this.tddjsMyEncodeURI = tddjs.encoding.myEncodeURI;
   }
 
   function tearDown() {
     tddjs.isLocal = this.tddjsIsLocal;
     ajax.create = this.ajaxCreate;
+    tddjs.encoding.myEncodeURI = this.tddjsMyEncodeURI;
   }
 
   TestCase("GetRequestTest", {
@@ -145,6 +147,15 @@
       ajax.request("/uri", { method: "POST" });
 
       assertEquals("POST", this.xhr.open.args[0]);
+    },
+
+    "test should encode data": function () {
+      tddjs.encoding.myEncodeURI = stubFn();
+      var urlParams = { field1: "13", field2: "Lots of data!" };
+
+      ajax.request("/url", { data: urlParams, method: "POST" });
+
+      assertSame(urlParams, tddjs.encoding.myEncodeURI.args[0]);
     }
   });
 

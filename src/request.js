@@ -21,6 +21,8 @@
       throw new TypeError("URL should be string");
     }
 
+    options = tddjs.extend({}, options);
+    options.data = tddjs.encoding.myEncodeURI(options.data);
     options = options || {};
     var transport = ajax.create();
     transport.open(options.method || "GET", url, true);
