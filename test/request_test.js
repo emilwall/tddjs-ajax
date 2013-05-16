@@ -165,6 +165,15 @@
       assertNoException(function () {
         ajax.request("/url", { data: urlParams, method: "POST" });
       });
+    },
+
+    "test should send data with send() for POST": function () {
+      var urlParams = { field1: "13", field2: "Lots of data!" };
+      var expected = tddjs.encoding.myEncodeURI(urlParams);
+
+      ajax.request("/url", { data: urlParams, method: "POST" });
+
+      assertSame(expected, this.xhr.send.args[0]);
     }
   });
 

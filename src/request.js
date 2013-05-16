@@ -25,17 +25,23 @@
     if (typeof tddjs.encoding.myEncodeURI === "function") {
       options.data = tddjs.encoding.myEncodeURI(options.data);
     }
+    var data = null;
+
+    if (options.method === "POST") {
+      data = options.data;
+    }
+
     var transport = ajax.create();
     transport.open(options.method || "GET", url, true);
 
     transport.onreadystatechange = function () {
-      if (transport.readyState == 4) {
+      if (transport.readyState === 4) {
         requestComplete(transport, options);
         transport.onreadystatechange = tddjs.noop;
       }
     };
 
-    transport.send(null);
+    transport.send(data);
   }
 
   ajax.request = request;
